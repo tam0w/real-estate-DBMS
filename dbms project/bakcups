@@ -1,0 +1,56 @@
+# result = db.engine.execute(f"SELECT `agents`.`A_NAME`, `property`.* FROM `agents` LEFT JOIN `property` ON `agents`.`A_ID` = `property`.`A_ID`;").all()
+        # result = db.engine.execute(f"SELECT property.*,agents.A_NAME FROM `property`,'agents' WHERE `P_TYPE` = '{P_TYPE}' AND `P_BHK` = '{P_BHK}' AND `P_LOC` LIKE '%{P_LOC}%' AND 'property.A_ID'='agents.A_ID'")
+        # if P_LOC != '':
+        #     result = db.engine.execute(f"SELECT * FROM `property` WHERE `P_LOC` LIKE '%{P_LOC}%'").all()
+        # if P_NAME != '':
+        #     result = db.engine.execute(f"SELECT * FROM `property` WHERE `P_NAME' LIKE '%{P_NAME}%'").all()
+        # if P_BHK != '':
+        #     result = db.engine.execute(f"SELECT * FROM `property` WHERE `P_BHK` = '{P_BHK}'").all()
+        #     print(result)
+
+            # f"SELECT * FROM `property` WHERE `P_NAME' LIKE '%{P_NAME}%' OR `P_TYPE` = '{P_TYPE}' OR `P_BHK` = '{P_BHK}' OR `P_LOC` LIKE '%{P_LOC}%'").all()
+
+
+
+
+
+            # result = db.engine.execute(f"SELECT `property`.*, `agents`.`A_NAME`, `agents`.`A_PHNO` FROM `agents` JOIN `property` ON `agents`.`A_ID` = `property`.`A_ID`  AND `property`.`A_ID` = `agents`.`A_ID` AND `property`.`P_BHK` < {P_BHK} AND `property`.`P_SQFT` < {P_SQFT} AND `property`.`P_LOC` LIKE '%%{P_LOC}%%' AND `property`.`P_NAME` LIKE '%%{P_NAME}%%' AND `property`.`P_TYPE` LIKE '%%{P_TYPE}%%';").all()
+
+            # Taking number of queens as input from user
+print ("Enter the number of queens")
+N = int(input())
+
+# here we create a chessboard
+# NxN matrix with all elements set to 0
+board = [[0]*N for _ in range(N)]
+print(board)
+
+def attack(i, j):
+    #checking vertically and horizontally
+    for k in range(0,N):
+        if board[i][k]==1 or board[k][j]==1:
+            return True
+    #checking diagonally
+    for k in range(N):
+        for l in range(N):
+            if (k+l==i+j) or (k-l==i-j):
+                if board[k][l]==1:
+                    return True
+    return False
+
+def N_queens(n):
+    if n==0:
+        return True
+    for i in range(N):
+        for j in range(0,N):
+            if (not(attack(i,j))) and (board[i][j] == 0):
+                board[i][j] = 1
+                if N_queens(n-1)==True:
+                    return True
+                board[i][j] = 0
+
+    return False
+
+N_queens(N)
+for i in board:
+    print (i)
